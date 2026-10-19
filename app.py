@@ -1,6 +1,7 @@
 import os
 import re
 import sqlite3
+import base64
 from collections import Counter
 from datetime import datetime
 
@@ -657,6 +658,60 @@ with tab_tugas:
     else:
         st.info("Tautan tugas belum diisi. Tempel tautan tugas khusus Google Classroom pada `tugas_url` untuk subbab ini.")
 
+# =========================================================
+# TAB BUKU PANDUAN
+# =========================================================
+with tab_panduan:
+    st.subheader("📚 Buku Panduan AI Tutor Bahasa Indonesia")
+
+    st.write(
+        "Pelajari cara menggunakan aplikasi, membaca materi "
+        "melalui Tutor AI, mengerjakan tes, dan mengumpulkan tugas."
+    )
+
+    FILE_BUKU_PANDUAN = os.path.join(
+        BASE_DIR,
+        "buku_panduan.pdf"
+    )
+
+    if os.path.isfile(FILE_BUKU_PANDUAN):
+        with open(FILE_BUKU_PANDUAN, "rb") as file:
+            pdf_bytes = file.read()
+
+        st.download_button(
+            label="⬇️ Unduh Buku Panduan (PDF)",
+            data=pdf_bytes,
+            file_name="Buku_Panduan_AI_Tutor_Bahasa_Indonesia.pdf",
+            mime="application/pdf",
+            use_container_width=True,
+        )
+
+        st.markdown("### Pratinjau Buku Panduan")
+
+        pdf_base64 = base64.b64encode(
+            pdf_bytes
+        ).decode("utf-8")
+
+        st.components.v1.html(
+            f"""
+            <iframe
+                src="data:application/pdf;base64,{pdf_base64}"
+                width="100%"
+                height="800"
+                style="border: none;"
+                type="application/pdf">
+            </iframe>
+            """,
+            height=820,
+            scrolling=True,
+        )
+
+    else:
+        st.warning(
+            "File buku_panduan.pdf belum ditemukan. "
+            "Pastikan file berada di folder yang sama dengan app.py."
+        )
+        
 # =========================================================
 # RIWAYAT NILAI PESERTA DIDIK
 # =========================================================
