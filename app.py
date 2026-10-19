@@ -517,7 +517,8 @@ pilihan_subbab = st.selectbox("Pilih subbab", list(KONFIGURASI_SUBBAB.keys()))
 info_subbab = KONFIGURASI_SUBBAB[pilihan_subbab]
 st.markdown(f"### {info_subbab['judul']}")
 
-tab_pre, tab_materi, tab_post, tab_tugas = st.tabs([
+tab_panduan, tab_pre, tab_materi, tab_post, tab_tugas = st.tabs([
+    "📚 Buku Panduan",
     "📝 Pre-test",
     "📖 Materi & Tutor AI",
     "✅ Post-test",
